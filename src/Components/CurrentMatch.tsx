@@ -6,7 +6,6 @@ import CountDown from "./CountDownTimer/CountDown";
 import { Link } from "react-router-dom";
 import { teamLogo } from "../Config/TeamLogoMap";
 
-
 function CurrentMatch() {
   const [ipl_series_info, setipl_series_info] = useState(() => {
     // getting stored value
@@ -15,16 +14,40 @@ function CurrentMatch() {
     return initialValue || "";
   });
   const [upcomingIPL, setUpcomingIPL] = useState<any>([]);
+  const [isDataUpdated, setdataUpdated] = useState(false);
 
   useEffect(() => {
     if (ipl_series_info) return;
     axios
       .get(`/series_info/?id=${IPLAPIID}`)
       .then((response: any) => {
-        console.log(response);
         const dataToStore = JSON.stringify(response);
         setipl_series_info(dataToStore);
         localStorage.setItem("ipl_series_info", dataToStore);
+        setdataUpdated(true);
+
+        const featureMatches: any = response?.data?.data.matchList.filter((match: any) => {
+          const now = moment().format("Y-MM-DD");
+          const matchDate = moment(match.dateTimeGMT).format("Y-MM-DD");
+          if (moment(matchDate).isSame(now)) {
+            return match;
+          }
+        });
+        if (featureMatches) {
+          const currentMatch = featureMatches.filter((match: any) => {
+            const now = moment().format("Y-MM-DD HH:mm:ss");
+            const matchDate = moment(match.dateTimeGMT).format("Y-MM-DD HH:mm:ss");
+            if (moment(matchDate).isSameOrAfter(now)) {
+              return match;
+            } else {
+              if (moment(matchDate).isSameOrBefore(now)) {
+                return match;
+              }
+            }
+          });
+          
+          setUpcomingIPL(currentMatch);
+        }
       })
       .catch((error: any) => {
         console.log("error  ---", error);
@@ -44,26 +67,21 @@ function CurrentMatch() {
         const currentMatch = featureMatches.filter((match: any) => {
           const now = moment().format("Y-MM-DD HH:mm:ss");
           const matchDate = moment(match.dateTimeGMT).format("Y-MM-DD HH:mm:ss");
-          console.log("match -- ", match);
-          console.log("match date-- ", matchDate, now);
           if (moment(matchDate).isSameOrAfter(now)) {
             return match;
-          }else {
+          } else {
             if (moment(matchDate).isSameOrBefore(now)) {
               return match;
             }
           }
         });
-        
         setTimeout(() => {
           setUpcomingIPL(currentMatch);
-          
         }, 100);
       }
     }
-  }, []);
+  }, [isDataUpdated]);
 
-  {console.log("UpcomingIPL -- ", upcomingIPL)}
   return (
     <div className="ticket_slider float_left">
       <div className="container">
@@ -104,7 +122,6 @@ function CurrentMatch() {
                   <ul>
                     <li>
                       <Link to={"scoreboard/" + upcomingIPL[0]?.id}> Match Started </Link>
-                      
                     </li>
                   </ul>
                 </div>
