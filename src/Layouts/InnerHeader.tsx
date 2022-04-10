@@ -1,6 +1,4 @@
 import Logo from "../Components/Header/Logo";
-import ResponsiveMenu from "../Components/Header/ResponsiveMenu";
-import ShapeTop from "../Components/Header/ShapeTop";
 import HeaderSideBar from "./HeaderSideBar";
 
 function InnerHeader() {

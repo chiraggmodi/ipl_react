@@ -2,7 +2,7 @@ import { useState } from "react";
 import ResultsTable from "./Results/ResultsTable";
 
 const ResultsComponent = () => {
-  const [ipl_series_info, setipl_series_info] = useState(() => {
+  const [ipl_series_info] = useState(() => {
     // getting stored value
     const saved: any = localStorage.getItem("ipl_series_info");
     const initialValue: any = JSON.parse(saved);

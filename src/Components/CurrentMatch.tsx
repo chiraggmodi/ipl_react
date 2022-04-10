@@ -32,6 +32,7 @@ function CurrentMatch() {
           if (moment(matchDate).isSame(now)) {
             return match;
           }
+          return false;
         });
         if (featureMatches) {
           const currentMatch = featureMatches.filter((match: any) => {
@@ -43,6 +44,7 @@ function CurrentMatch() {
               if (moment(matchDate).isSameOrBefore(now)) {
                 return match;
               }
+              return false;
             }
           });
           
@@ -52,7 +54,7 @@ function CurrentMatch() {
       .catch((error: any) => {
         console.log("error  ---", error);
       });
-  }, []);
+  }, [isDataUpdated]);
 
   useEffect(() => {
     if (ipl_series_info) {
