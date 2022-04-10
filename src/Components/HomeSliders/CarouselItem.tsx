@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 
 
 function CarouselItem(props:any) {
@@ -22,7 +23,7 @@ function CarouselItem(props:any) {
                       <div className="hs_btn_wrapper slider_btn" data-animation="animated fadeInUp">
                         <ul>
                           <li>
-                            <a href="#">view more</a>
+                            <Link to="#">view more</Link>
                           </li>
                         </ul>
                       </div>

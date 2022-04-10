@@ -1,10 +1,11 @@
 import logo from "./logo3.png";
 import logoDark from "./logo.png";
+import { Link } from "react-router-dom";
 function Logo({dark}: any) {
     return(
-        <a href="#">
+        <Link to="/">
             <img src={dark ? logoDark : logo} alt="logo" />
-        </a>
+        </Link>
     )
 }
 

@@ -1,8 +1,8 @@
-import React from "react";
 import ResponsiveMenu from "./Header/ResponsiveMenu";
 import CarouselItem from "./HomeSliders/CarouselItem";
 import Carousel from "../Config/Carousel";
 import cricketBall from "./HomeSliders/ball.png"
+import { Link } from "react-router-dom";
 
 function HomeSlider() {
   return (
@@ -20,12 +20,12 @@ function HomeSlider() {
             </li>))}
           </ol>
           <div className="carousel-nevigation">
-            <a className="prev" href="#carousel-example-generic" role="button" data-slide="prev">
+            <Link className="prev" to="#carousel-example-generic" role="button" data-slide="prev">
               <i className="flaticon-left-arrow"></i>
-            </a>
-            <a className="next" href="#carousel-example-generic" role="button" data-slide="next">
+            </Link>
+            <Link className="next" to="#carousel-example-generic" role="button" data-slide="next">
               <i className="flaticon-right-arrow"></i>
-            </a>
+            </Link>
           </div>
         </div>
       </div>
@@ -50,24 +50,24 @@ function HomeSlider() {
       </div>
       <ul className="slider_social_icon">
         <li>
-          <a href="#">
+          <Link to="#">
             <i className="fa fa-facebook"></i>
-          </a>
+          </Link>
         </li>
         <li>
-          <a href="#">
+          <Link to="#">
             <i className="fa fa-twitter"></i>
-          </a>
+          </Link>
         </li>
         <li>
-          <a href="#">
+          <Link to="#">
             <i className="fa fa-youtube-play" aria-hidden="true"></i>
-          </a>
+          </Link>
         </li>
         <li>
-          <a href="#">
+          <Link to="#">
             <i className="fa fa-instagram" aria-hidden="true"></i>{" "}
-          </a>
+          </Link>
         </li>
       </ul>
     </div>

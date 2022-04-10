@@ -44,8 +44,8 @@ function CurrentMatch() {
               if (moment(matchDate).isSameOrBefore(now)) {
                 return match;
               }
-              return false;
             }
+            return false;
           });
           
           setUpcomingIPL(currentMatch);
@@ -54,7 +54,7 @@ function CurrentMatch() {
       .catch((error: any) => {
         console.log("error  ---", error);
       });
-  }, [isDataUpdated]);
+  }, [ipl_series_info]);
 
   useEffect(() => {
     if (ipl_series_info) {
@@ -64,6 +64,7 @@ function CurrentMatch() {
         if (moment(matchDate).isSame(now)) {
           return match;
         }
+        return false;
       });
       if (featureMatches) {
         const currentMatch = featureMatches.filter((match: any) => {
@@ -73,16 +74,16 @@ function CurrentMatch() {
             return match;
           } else {
             if (moment(matchDate).isSameOrBefore(now)) {
-              return match;
             }
           }
+          return match;
         });
         setTimeout(() => {
           setUpcomingIPL(currentMatch);
         }, 100);
       }
     }
-  }, [isDataUpdated]);
+  }, [ipl_series_info, isDataUpdated]);
 
   return (
     <div className="ticket_slider float_left">
@@ -102,9 +103,9 @@ function CurrentMatch() {
                   </div>
                   <div className="col-md-2 col-sm-2 col-4">
                     <div className="new">
-                      <a href="#">
+                      <Link to="#">
                         <span>VS</span>
-                      </a>
+                      </Link>
                     </div>
                   </div>
                   <div className="col-md-5 col-sm-5 col-4">
