@@ -14,17 +14,14 @@ function CurrentMatch() {
     return initialValue || "";
   });
   const [upcomingIPL, setUpcomingIPL] = useState<any>([]);
-  const [isDataUpdated, setdataUpdated] = useState(false);
 
   useEffect(() => {
-    if (ipl_series_info) return;
     axios
       .get(`/series_info/?id=${IPLAPIID}`)
       .then((response: any) => {
         const dataToStore = JSON.stringify(response);
         setipl_series_info(dataToStore);
         localStorage.setItem("ipl_series_info", dataToStore);
-        setdataUpdated(true);
 
         const featureMatches: any = response?.data?.data.matchList.filter((match: any) => {
           const now = moment().format("Y-MM-DD");
@@ -56,34 +53,6 @@ function CurrentMatch() {
       });
   }, [ipl_series_info]);
 
-  useEffect(() => {
-    if (ipl_series_info) {
-      const featureMatches: any = ipl_series_info?.data?.data.matchList.filter((match: any) => {
-        const now = moment().format("Y-MM-DD");
-        const matchDate = moment(match.dateTimeGMT).format("Y-MM-DD");
-        if (moment(matchDate).isSame(now)) {
-          return match;
-        }
-        return false;
-      });
-      if (featureMatches) {
-        const currentMatch = featureMatches.filter((match: any) => {
-          const now = moment().format("Y-MM-DD HH:mm:ss");
-          const matchDate = moment(match.dateTimeGMT).format("Y-MM-DD HH:mm:ss");
-          if (moment(matchDate).isSameOrAfter(now)) {
-            return match;
-          } else {
-            if (moment(matchDate).isSameOrBefore(now)) {
-            }
-          }
-          return match;
-        });
-        setTimeout(() => {
-          setUpcomingIPL(currentMatch);
-        }, 100);
-      }
-    }
-  }, [ipl_series_info, isDataUpdated]);
 
   return (
     <div className="ticket_slider float_left">
